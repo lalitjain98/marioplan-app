@@ -1,14 +1,12 @@
-const initialState = {
-    projects: [
-        {id: '1', title: 'help me find peach', content: 'blah blah blah'},
-        {id: '2', title: 'collect all the stars', content: 'blah blah blah'},
-        {id: '3', title: 'egg hunt with yoshi', content: 'blah blah blah'}
-    ]
-}
+const initialState = { }
 const projectReducer = (state=initialState, action) => {
     switch(action.type){
+        case 'RESET_STATE':
+                return {...state, createProjectSuccess: false, err: null};
         case 'CREATE_PROJECT':
-            return {...state, projects: [action.project, ...state.projects]}
+            return {...state, createProjectSuccess: true, err: null};
+        case 'CREATE_PROJECT_ERROR':
+            return {...state, createProjectSuccess: false, err: action.err}
         default:
             return state;
     }

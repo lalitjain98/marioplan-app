@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { signOut } from '../../store/actions/authActions';
+import { connect } from 'react-redux';
 
 const SignedInLinks = (props)=> {
     return (
@@ -10,16 +12,28 @@ const SignedInLinks = (props)=> {
                 </NavLink>
                 </li>
             <li>
-                <NavLink to='/'>
+                <a  onClick={()=>props.signOut()}>
                     Log Out
-                </NavLink></li>
+                </a>
+            </li>
             <li>
                 <NavLink to='/' className="btn btn-floating pink lighten-1">
-                    LJ
+                    {props.profile.initials}
                 </NavLink>
             </li>
         </ul>
     )
 }
+const mapStateToProps = (state) =>{
+    return {
+        profile: state.firebase.profile
+    }
+}
 
-export default SignedInLinks;
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        signOut: ()=>dispatch(signOut())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignedInLinks);
